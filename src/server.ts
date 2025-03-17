@@ -17,6 +17,10 @@ app.use(morgan('dev'));
 
 app.use(express.json());
 
+app.get('/', (req, res) => {
+    res.status(200).json({ message: 'API funcionando correctamente' });
+});
+
 //Routes
 app.use('/api/auth', authRoutes);
 app.use('/api/projects', projectRoutes);
