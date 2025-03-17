@@ -1,20 +1,17 @@
-import { CorsOptions } from 'cors';
+import { CorsOptions } from 'cors'
 
-export const corsConfig = {
-    origin: function (origin, callback) {
-        console.log('Origin recibido:', origin); // Para depuración
+export const corsConfig: CorsOptions = {
+    origin: function(origin, callback) {
+        const whitelist = [process.env.FRONTEND_URL]
 
-        const whitelist = [
-            process.env.FRONTEND_URL, 
-            "http://localhost:5173" // Para desarrollo local
-        ];
-
-        if (!origin || whitelist.includes(origin)) {
-            callback(null, true);
-        } else {
-            callback(new Error('Error de CORS'));
+        if(process.argv[2] === '--api') {
+            whitelist.push(undefined)
         }
-    },
-    credentials: true, // Permite envío de cookies y encabezados como Authorization
-    methods: ['GET', 'POST', 'PUT', 'DELETE'], // Métodos permitidos
-};
+
+        if(whitelist.includes(origin)) {
+            callback(null, true)
+        } else {
+            callback(new Error('Error de CORS'))
+        }
+    }
+}

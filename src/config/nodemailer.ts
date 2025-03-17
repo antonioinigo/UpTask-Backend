@@ -1,11 +1,9 @@
-import nodemailer from "nodemailer";
-import dotenv from 'dotenv';
+import nodemailer from 'nodemailer'
+import dotenv from 'dotenv'
+dotenv.config()
 
-
-dotenv.config();
-
-const config =()=>{
-    return{
+const config = () => {
+    return {
         host: process.env.SMTP_HOST,
         port: +process.env.SMTP_PORT,
         auth: {

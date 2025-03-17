@@ -1,29 +1,26 @@
-import express from 'express';
-import dotenv from 'dotenv';
-import {connectDB} from './config/db';
-import projectRoutes from './routes/projectRoutes'
-import morgan from 'morgan';
+import express from 'express'
+import dotenv from 'dotenv'
 import cors from 'cors'
+import morgan from 'morgan'
 import { corsConfig } from './config/cors'
-import authRoutes from './routes/authRoutes';
+import { connectDB } from './config/db'
+import authRoutes from './routes/authRoutes'
+import projectRoutes from './routes/projectRoutes'
 
-dotenv.config();
-connectDB();
+dotenv.config()
+connectDB()
 
-const app = express();
+const app = express()
 app.use(cors(corsConfig))
 
-app.use(morgan('dev'));
+// Logging
+app.use(morgan('dev'))
 
-app.use(express.json());
+// Leer datos de formularios
+app.use(express.json())
 
-app.get('/', (req, res) => {
-    res.status(200).json({ message: 'API funcionando correctamente' });
-});
+// Routes
+app.use('/api/auth', authRoutes)
+app.use('/api/projects', projectRoutes)
 
-//Routes
-app.use('/api/auth', authRoutes);
-app.use('/api/projects', projectRoutes);
-
-
-export default app;
+export default app
